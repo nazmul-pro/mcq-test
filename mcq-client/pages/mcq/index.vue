@@ -67,10 +67,7 @@ export default Vue.extend<any, any, any, any>({
 }
   .content {
     width: 70%;
-    position: fixed;
-    top: 50px;
-    left: 50%;
-    transform: translate(-50%, -5%);
+    margin: 0 auto;
   }
   .remaining {
     padding: 30px;
