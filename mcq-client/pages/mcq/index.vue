@@ -8,9 +8,9 @@
 
     <Question class="question"
       :class="countDown === 0 ? 'no-access' : 'has-access'"
-      v-for="ques in questions"
+      v-for="(ques, index) in questions"
       :key="ques.id"
-      :questionInfo="ques"/>
+      :questionInfo="{ ...ques, sl: index + 1 }"/>
     
     <div class="right">
       <NuxtLink to="/result">
@@ -21,50 +21,46 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { IQuestion, QUESTIONS } from './../../data/questions';
-interface IQuestionViewModel extends IQuestion{
-  userAns: string;
-}
+  import Vue from 'vue'
+  import { QUESTIONS } from './../../data/questions';
 
-export default Vue.extend<any, any, any, any>({
-  data() {
-    return {      
-      questions: QUESTIONS,
-      countDown: QUESTIONS.length * 60,
-      remaining: '',
-      countDownTimer() {
-          if (this.countDown > 0) {
-              setTimeout(() => {
-                  this.countDown -= 1;
-                  this.remaining = this.formatSecondsToRemaining(this.countDown);
-                  this.countDownTimer();
-              }, 1000)
-          }
-      },
-      formatSecondsToRemaining(seconds: number): string {
-        const format = (val: number) => `0${Math.floor(val)}`.slice(-2)
-        const hours = seconds / 3600
-        const minutes = (seconds % 3600) / 60
+  export default Vue.extend<any, any, any, any>({
+    data: () => {
+      return {      
+        questions: QUESTIONS,
+        countDown: QUESTIONS.length * 60,
+        remaining: '',
+        countDownTimer(): void {
+            if (this.countDown > 0) {
+                setTimeout(() => {
+                    this.countDown -= 1;
+                    this.remaining = this.formatSecondsToRemaining(this.countDown);
+                    this.countDownTimer();
+                }, 1000)
+            }
+        },
+        formatSecondsToRemaining(seconds: number): string {
+          const format = (val: number) => `0${Math.floor(val)}`.slice(-2)
+          const hours = seconds / 3600
+          const minutes = (seconds % 3600) / 60
 
-        return [hours, minutes, seconds % 60].map(format).join(':')
-      },
-    }
+          return [hours, minutes, seconds % 60].map(format).join(':')
+        },
+      }
+    },
+    created() {
+      this.$store.commit('setScoreToZero');
+    },
+    beforeMount() {
+      this.countDownTimer();
   },
-  created() {
-    this.$actions.setResult(0);
-  },
-  beforeMount() {
-    this.countDownTimer();
- },
-})
-
-
+  })
 </script>
+
 <style scoped>
-.right {
-  text-align: right;
-}
+  .right {
+    text-align: right;
+  }
   .content {
     width: 70%;
     margin: 0 auto;

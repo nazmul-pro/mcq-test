@@ -1,38 +1,46 @@
 <template>
   <div class="question">
-    {{ questionInfo.title }}
+    {{questionInfo.sl}}. {{ questionInfo.title }}
     <div class="option"
-      v-for="option in questionInfo.options" :key="option">
-      <input type="radio" :name="questionInfo.id" 
-        v-model="questionInfo.userAns" 
-        :value="option" 
-        :disabled="questionInfo.userAns"
-        @change="onChange($event)">
-      {{ option }}
+      v-for="option in questionInfo.options"
+      :key="option">
+      <span v-on:click="onClickOption(option)">
+        <input type="radio"
+          v-model="userAns"
+          :name="questionInfo.id"
+          :value="option"
+          :disabled="isDisabled">
+        {{ option }}
+      </span>
     </div>
     
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+  import Vue from 'vue'
 
-export default Vue.extend<any, any, any, any>({
-  name: 'Question',
-  props: ['questionInfo'],
-  methods: {
-    onChange (): void {
-      this.$forceUpdate();
+  export default Vue.extend<any, any, any, any>({
+    name: 'Question',
+    props: ['questionInfo'],
+    data: () => {
+      return { isDisabled: false, userAns: '' };
+    },
+    methods: {
+      onClickOption (userAns: string): void {
+        if (this.isDisabled) {
+          return;
+        }
 
-      if (this.questionInfo.answer === this.questionInfo.userAns) {
-        this.$actions.increment();        
+        this.isDisabled = true;
+        this.userAns = userAns;
+
+        if (this.questionInfo.answer === userAns) {
+          this.$store.commit('markAsCorrect');       
+        }
       }
     }
-  },
-  created() {
-    this.questionInfo.userAns = null;
-  }
-})
+  })
 </script>
 
 <style scoped>
@@ -46,5 +54,9 @@ export default Vue.extend<any, any, any, any>({
   }
   .option {
     padding-left: 30px;
+    cursor: pointer;
+  }
+  input[type="radio"] {
+    cursor: pointer;
   }
 </style>
