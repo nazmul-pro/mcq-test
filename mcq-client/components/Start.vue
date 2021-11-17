@@ -1,42 +1,25 @@
 <template>
-<div class="centered start-container">
- <div class="content">
-    <div class="primary-text">MCQ TEST</div>
-    <div>Total {{ numberOfQues }} questions</div>
-    <NuxtLink to="/mcq" class="nav-link">
-      <button class="start-btn">START</button>
-    </NuxtLink>
+  <div class="centered start-container">
+  <div class="content">
+      <div class="primary-text">MCQ TEST</div>
+      <div>Total {{ numberOfQues }} questions</div>
+      <NuxtLink to="/mcq" class="nav-link">
+        <button class="start-btn">START</button>
+      </NuxtLink>
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { QUESTIONS } from '../data/questions';
+  import Vue from 'vue'
+  import { QUESTIONS } from '../data/questions';
 
-export default Vue.extend({
-  name: 'Start',
-  data() { 
-    return { numberOfQues: QUESTIONS.length }
-  }
-})
-
-  // Store
-  const store = Vue.observable({  result: 0  })
-  const actions = {
-    increment () {
-      store.result += 1;
-    },
-    setResult(result: number) {
-      store.result = result;
-    },
-    getResult() {
-      return store.result;
+  export default Vue.extend({
+    name: 'Start',
+    data: () => { 
+      return { numberOfQues: QUESTIONS.length }
     }
-  }
-
-  Vue.prototype.$actions = actions;
-  // Store end
+  })
 </script>
 
 <style scoped>

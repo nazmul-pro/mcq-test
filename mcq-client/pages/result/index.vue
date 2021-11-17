@@ -1,21 +1,23 @@
 <template>
-<div class="centered start-container">
- <div class="content">
-    <div class="primary-text">MCQ RESULT</div>
-    <img :src="require('./../../assets/image/congrat.png')">
-    <div>You got {{ $actions.getResult() }} score</div>
-    <NuxtLink to="/mcq" class="nav-link">
-      <button class="start-btn">TAKE AGAIN</button>
-    </NuxtLink>
+  <div class="centered start-container">
+    <div class="content">
+      <div class="primary-text">MCQ RESULT</div>
+      <img :src="require('./../../assets/image/congrat.png')">
+      <div>You got {{ getScore }} score</div>
+      <NuxtLink to="/mcq" class="nav-link">
+        <button class="start-btn">TAKE AGAIN</button>
+      </NuxtLink>
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue from 'vue';
+  import { mapGetters } from 'vuex';
 
   export default Vue.extend({
-    name: 'Result'
+    name: 'Result',
+    computed: { ...mapGetters(['getScore']) }
   })
 </script>
 
