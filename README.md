@@ -8,7 +8,9 @@ Used Tehcnologies:
 Estimated time: 4 hrs
 
 Development Steps:
+
 First of all I dont have any prior knowledge/experience with vue/nuxt js.
+-------------------------
 So I have to study about it.
 
 First 2 hours:
@@ -16,7 +18,7 @@ First 2 hours:
 I spend 2 hours for learning vue/nuxt js.
 Exploring essential concepts for this project.
 1. Vue/Nuxt Architecture/Installation
-2. Sytaxes
+2. Syntaxes
 3. Bindings(data, events)
 4. Components
 5. Routing etc
@@ -37,4 +39,4 @@ Then I decided to deploy it on AWS/EC2 server.
 I spend here 1 hour almost.
 
 
-Total time spend: almost 6 hrs to complete all :D
+Total time spend: almost 6 hrs to complete all including docs here :D
